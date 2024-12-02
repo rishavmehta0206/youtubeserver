@@ -33,9 +33,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen("8800", () => {
+app.listen("8800", async() => {
   console.log("running");
-  connectToDb();
+  await connectToDb().then(res => console.log(res);
 });
 
 const connectToDb = async () => {
@@ -47,6 +47,7 @@ const connectToDb = async () => {
     }
     const db = await mongoose.connect(process.env.MONGO_URL);
     connection.isConnected = db.connections[0].readyState;
+    return 'connected to db';
   } catch (error) {
     console.log(error);
     throw new Error(error);
